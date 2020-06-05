@@ -1,0 +1,25 @@
+hub:
+  image:
+    name: jhfoo
+  extraConfig:
+    mck.py: |
+      import mck_init
+      mck_init.init_mck_secrets(c)
+proxy:
+  secretToken: "e64a6dc7dfb3b3dac7f6a3b52429d92d2f5b17bb311625b2617e89eda62ed15b"
+auth:
+  type: custom
+  custom:
+    className: oauthenticator.generic.GenericOAuthenticator
+    config:
+      login_service: "mck://login_service"
+      client_id: "foo"
+      client_secret: "mck://client_secret"
+      token_url: "https://example.com/token"
+      userdata_url: "htpps://example.com/userdata"
+      userdata_method: GET
+      userdata_params: {'state': 'state'}
+      username_key: "email"
+
+
+
