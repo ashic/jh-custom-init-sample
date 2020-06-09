@@ -5,8 +5,10 @@ hub:
     mck.py: |
       import mck_init
       mck_init.init_mck_secrets(c)
+custom:
+  hub_cookie_secret: "mck://cookie_secret"
 proxy:
-  secretToken: "e64a6dc7dfb3b3dac7f6a3b52429d92d2f5b17bb311625b2617e89eda62ed15b"
+  secretToken: "mck://placeholder"
 auth:
   type: custom
   custom:
@@ -20,6 +22,9 @@ auth:
       userdata_method: GET
       userdata_params: {'state': 'state'}
       username_key: "email"
+singleuser:
+  extraEnv:
+    MCK_JUP_CLIENT_ID: "mck://jup_client_id"
 
 
 

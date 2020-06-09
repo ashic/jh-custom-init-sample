@@ -1,4 +1,4 @@
-FROM jupyterhub/k8s-hub:0.8.2
+FROM jupyterhub/k8s-hub:0.9-17c3f1d
 
 ADD mck_init ./mck_init/
 
