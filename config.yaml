@@ -9,19 +9,6 @@ custom:
   hub_cookie_secret: "mck://cookie_secret"
 proxy:
   secretToken: "mck://placeholder"
-auth:
-  type: custom
-  custom:
-    className: oauthenticator.generic.GenericOAuthenticator
-    config:
-      login_service: "mck://login_service"
-      client_id: "foo"
-      client_secret: "mck://client_secret"
-      token_url: "https://example.com/token"
-      userdata_url: "htpps://example.com/userdata"
-      userdata_method: GET
-      userdata_params: {'state': 'state'}
-      username_key: "email"
 singleuser:
   extraEnv:
     MCK_JUP_CLIENT_ID: "mck://jup_client_id"

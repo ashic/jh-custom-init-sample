@@ -24,6 +24,26 @@ def get_value(current):
     
     return current
 
+def get_role_for_user(user):
+    """sample function that takes in a user, and returns the value of the 
+    role annotation to assign for that user.
+    """
+    return f"mck-user-role-{user}"
+
+
+def modify_pod(spawner, pod):
+    """hook that modifies the pod just before launching it.
+    here, we get the username from the pod's annotations, look up
+    the user's role, and add it to a new annotation.
+    """
+    user = pod.metadata.annotations.get('hub.jupyter.org/username')
+
+    if user:
+        role = get_role_for_user(user)
+        pod.metadata.annotations['iam.amazonaws.com/role'] = role
+
+    return pod
+
 def init_mck_secrets(c):
     auth_type = get_config('auth.type')
 
@@ -52,3 +72,8 @@ def init_mck_secrets(c):
     # c.KubeSpawner.environment
     singleUserEnv = get_config("singleuser.extraEnv" or {})
     c.KubeSpawner.environment = {k:get_value(singleUserEnv[k]) for k in singleUserEnv}
+
+    # this annotation will be applied to all pods
+    c.KubeSpawner.extra_annotations['mck.aws/role'] = "arn:some-funky-role-for-all-pods"
+    # here, we assign the hook function. this will be used just prior to launching a pod.
+    c.KubeSpawner.modify_pod_hook = modify_pod
